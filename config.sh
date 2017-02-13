@@ -8,11 +8,12 @@ alias odrive-start="nohup $HOME/.odrive-agent/bin/odriveagent > /dev/null 2>&1 &
 alias odrive="$HOME/.odrive-agent/bin/odrive.py"
 ## rsync, recursively syncs all files in a folder
 function rsync {
-    flist=`find $1 -name "*.cloud"`
+    IFS=$'\n' # for loop on \n
+    flist=`find ./ -name "*cloud" -o -name "*cloudf"`
     while [[ $flist != "" ]]; do
         for f in $flist; do 
-            odrive sync $f
+            odrive sync "$f"
         done
-        flist=`find $1 -name "*.cloud"`
+        flist=`find ./ -name "*cloud" -o -name "*cloudf"`
     done
 }
